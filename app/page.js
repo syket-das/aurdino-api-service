@@ -12,14 +12,16 @@ export default function Home() {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    async function fetchData() {
-      const { result, error } = await getAllData('data');
-      if (error) {
-        console.log(error);
-      } else {
-        setData(result);
-      }
-    }
+    const fetchData = async () => {
+      const data = await fetch('/api/data', {
+        cache: 'no-store',
+      });
+
+      const result = await data.json();
+
+      setData(result.data);
+    };
+
     fetchData();
   }, []);
 
@@ -89,7 +91,7 @@ export default function Home() {
           </div>
         </div>
         <div className="table-row-group">
-          {data.map((item, index) => (
+          {data?.map((item, index) => (
             <div className="table-row " key={item.id + index}>
               <div className="table-cell   min-w-[80px] ">{item.key}</div>
               <div className="table-cell min-w-[80px] ">{item.value}</div>
