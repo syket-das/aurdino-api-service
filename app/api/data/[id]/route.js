@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 import admin from 'firebase-admin';
-import { adminDB } from '@/firebase/firebaseAdmin';
+import { adminDB } from '@/firebase/firebaseAdmin/firebaseAdmin';
 import { collection } from 'firebase/firestore';
 
 export async function GET(request, context) {
@@ -25,17 +25,18 @@ export async function GET(request, context) {
 
   const singleData = data.filter((item) => item.key === context.params.id)[0];
 
-  const response = NextResponse.json({
-    data: singleData,
-  },{
-    headers: {
+  const response = NextResponse.json(
+    {
+      data: singleData,
+    },
+    {
+      headers: {
         'Cache-Control': 'no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
+        Pragma: 'no-cache',
+        Expires: '0',
+      },
     }
-  });
-
-
+  );
 
   return response;
 }
