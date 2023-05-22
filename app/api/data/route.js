@@ -22,8 +22,14 @@ export async function GET() {
       console.log('Error getting documents', err);
     });
 
-  return NextResponse.json({
+  const response = NextResponse.json({
     data,
   });
-}
 
+  // Set cache control headers to prevent caching
+  response.headers.set('Cache-Control', 'no-store, must-revalidate');
+  response.headers.set('Pragma', 'no-cache');
+  response.headers.set('Expires', '0');
+
+  return response;
+}
