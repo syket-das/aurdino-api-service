@@ -27,12 +27,15 @@ export async function GET(request, context) {
 
   const response = NextResponse.json({
     data: singleData,
+  },{
+    headers: {
+        'Cache-Control': 'no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0',
+    }
   });
 
-  // Set cache control headers to prevent caching
-  response.headers.set('Cache-Control', 'no-store, must-revalidate');
-  response.headers.set('Pragma', 'no-cache');
-  response.headers.set('Expires', '0');
+
 
   return response;
 }
