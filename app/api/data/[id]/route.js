@@ -23,8 +23,6 @@ export async function GET(request, context) {
 export async function PUT(request, context) {
   const req = await request.json();
 
-
-
   const { result, error } = await updateDocument('data', context.params.id, {
     ...req,
   });
@@ -33,7 +31,7 @@ export async function PUT(request, context) {
     return NextResponse.json({
       error: error.message || error,
       message: 'Error updating data',
-    })
+    });
   }
 
   const response = NextResponse.json({

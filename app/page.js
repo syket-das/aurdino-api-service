@@ -48,10 +48,10 @@ export default function Home() {
     if (error) {
       alert('Something went wrong');
     } else {
-      setData([...data, { key, value }]);
       setKey('');
       setValue('');
       closeModal();
+      fetchData();
     }
   };
 
@@ -97,7 +97,7 @@ export default function Home() {
         Welcome to the API Server
       </h1>
 
-      <div className="w-[90vw] mx-auto">
+      <div className="w-[90vw] mx-auto ">
         <button
           className="bg-slate-400 p-3 mb-5 rounded-lg hover:bg-slate-600 text-white cursor-pointer"
           onClick={openModal}
@@ -106,50 +106,54 @@ export default function Home() {
         </button>
       </div>
 
-      <div className="table  w-[90vw]  mx-auto  border border-spacing-6 border-slate-500 border-separate">
-        <div className="table-header-group ">
-          <div className="table-row ">
-            <div className="table-cell text-left  font-mono font-extrabold ">
-              Key
-            </div>
-            <div className="table-cell text-left font-mono font-extrabold ">
-              Value
-            </div>
-            <div className="table-cell text-left font-mono font-extrabold ">
-              Action
-            </div>
-          </div>
-        </div>
-        <div className="table-row-group">
-          {data?.map((item, index) => (
-            <div className="table-row " key={item.id}>
-              <div className="table-cell   min-w-[80px] ">{item.key}</div>
-              <div className="table-cell min-w-[80px] ">{item.value}</div>
-              <div className="table-cell ...">
-                <div className="flex gap-4">
-                  <button
-                    className="bg-slate-400 p-3 mb-5 rounded-lg hover:bg-slate-600 text-white cursor-pointer"
-                    onClick={() => {
-                      setIsEdit(true);
-                      setKey(item.key);
-                      setValue(item.value);
-                      setId(item.id);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="bg-red-400 p-3 mb-5 rounded-lg hover:bg-red-600 text-white cursor-pointer"
-                    onClick={() => deleteDocument(item.id)}
-                  >
-                    Delete
-                  </button>
-                </div>
+      <div >
+        <div className="table   w-[90vw] h-[60vh]  mx-auto  border border-spacing-6 border-slate-500 border-separate overflow-scroll">
+          <div className="table-header-group ">
+            <div className="table-row ">
+              <div className="table-cell text-left  font-mono font-extrabold ">
+                Key
+              </div>
+              <div className="table-cell text-left font-mono font-extrabold ">
+                Value
+              </div>
+              <div className="table-cell text-left font-mono font-extrabold ">
+                Action
               </div>
             </div>
-          ))}
+          </div>
+          <div className="table-row-group">
+            {data?.map((item, index) => (
+              <div className="table-row " key={item.id}>
+                <div className="table-cell   min-w-[80px] ">{item.key}</div>
+                <div className="table-cell min-w-[80px] ">{item.value}</div>
+                <div className="table-cell ...">
+                  <div className="flex gap-4">
+                    <button
+                      className="bg-slate-400 p-3 mb-5 rounded-lg hover:bg-slate-600 text-white cursor-pointer"
+                      onClick={() => {
+                        setIsEdit(true);
+                        setKey(item.key);
+                        setValue(item.value);
+                        setId(item.id);
+                      }}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      className="bg-red-400 p-3 mb-5 rounded-lg hover:bg-red-600 text-white cursor-pointer"
+                      onClick={() => deleteDocument(item.id)}
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+
+
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
