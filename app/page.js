@@ -106,10 +106,13 @@ export default function Home() {
         </button>
       </div>
 
-      <div >
+      <div>
         <div className="table   w-[90vw] h-[60vh]  mx-auto  border border-spacing-6 border-slate-500 border-separate overflow-scroll">
           <div className="table-header-group ">
             <div className="table-row ">
+              <div className="table-cell text-left  font-mono font-extrabold ">
+                Id
+              </div>
               <div className="table-cell text-left  font-mono font-extrabold ">
                 Key
               </div>
@@ -124,8 +127,11 @@ export default function Home() {
           <div className="table-row-group">
             {data?.map((item, index) => (
               <div className="table-row " key={item.id}>
-                <div className="table-cell   min-w-[80px] ">{item.key}</div>
-                <div className="table-cell min-w-[80px] ">{item.value}</div>
+                <div className="table-cell min-w-[80px] border-b-2">
+                  <p className="text-gray-400">{item.id}</p>
+                </div>
+                <div className="table-cell   min-w-[60px] border-b-2">{item.key}</div>
+                <div className="table-cell min-w-[60px] border-b-2">{item.value}</div>
                 <div className="table-cell ...">
                   <div className="flex gap-4">
                     <button
@@ -152,8 +158,6 @@ export default function Home() {
           </div>
         </div>
       </div>
-
-
 
       <Transition appear show={isOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
@@ -340,3 +344,7 @@ export default function Home() {
     </>
   );
 }
+
+//  curl -X PUT https://api-server-sage.vercel.app/api/data/IugNLQUxif07NdosXBf6 -H "Content-Type: application/json" -d '{"value":"sage"}'
+
+// curl -X PUT -H "Content-Type: application/json"   -d '{"value":"sage"}'   https://api-server-sage.vercel.app/api/data/IugNLQUxif07NdosXBf6
