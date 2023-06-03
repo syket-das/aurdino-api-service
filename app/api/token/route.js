@@ -2,10 +2,7 @@ import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import prisma from '@/prisma/prismaInit';
 
-
-
 // POST /api/token => Create a new token
-
 
 export async function POST(request) {
   const req = await request.json();
@@ -37,4 +34,42 @@ export async function POST(request) {
   }
 }
 
+// GET /api/token/?dMac= => Get a token by dMac
 
+export async function GET(request) {
+  const dMac = request.nextUrl.searchParams.get('dMac');
+
+  try {
+    const token = await prisma.token.findUnique({
+      where: {
+        dMac,
+      },
+    });
+
+    const increaseTokenCount = await prisma.token.update({
+      where: {
+        dMac,
+      },
+      data: {
+        requestCount: token.requestCount + 1,
+      },
+    });
+
+    await prisma.$disconnect();
+
+    return NextResponse.json({
+      success: true,
+      token: {
+        ...token,
+        requestCount: increaseTokenCount.requestCount,
+      },
+    });
+  } catch (error) {
+    await prisma.$disconnect();
+
+    return NextResponse.json({
+      success: false,
+      error,
+    });
+  }
+}
