@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+
+model Token {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  str     String     @default(uuid())
+  dName String
+  dMac String @unique 
+  tPass String 
+  active Boolean @default(true)
+  requestCount Int @default(0)
+  apps App[]
+  
+}
+
+
+
+model App {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  readCount Int @default(0)
+  writeCount Int @default(0)
+  key String 
+  value String
+  tokenId String
+  token Token @relation(fields: [tokenId], references: [id])
+
+}
