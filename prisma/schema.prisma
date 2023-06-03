@@ -21,7 +21,7 @@ model Token {
   active Boolean @default(true)
   requestCount Int @default(0)
   apps App[]
-  
+
 }
 
 
